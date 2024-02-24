@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Methadone Treatment Eligibility</title>
+    <!-- Include jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Bootstrap CSS for Modal -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap JS for Modal -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+
+
+
+<body>
+    <h1>Check Your Eligibility for Methadone Treatment</h1>
+    <form action="/" method="post">
+        <form id="eligibilityForm">
+
+        <div>
+            <label for="Severity_of_Opioid_Use">Severity of Opioid Use:</label>
+            <select name="Severity_of_Opioid_Use" id="Severity_of_Opioid_Use">
+                <option value="Low">Low</option>
+                <option value="Moderate">Moderate</option>
+                <option value="High">High</option>
+            </select>
+        </div>
+    
+        <div>
+            <label for="Previous_Treatment_Attempts">Previous Treatment Attempts:</label>
+            <select name="Previous_Treatment_Attempts" id="Previous_Treatment_Attempts">
+                <option value="Zero">Zero</option>
+                <option value="One">One</option>
+                <option value="Multiple">Multiple</option>
+            </select>
+        </div>
+        
+        <div>
+            <label for="Co_occurring_Mental_Health_Conditions">Co-occurring Mental Health Conditions:</label>
+            <select name="Co_occurring_Mental_Health_Conditions" id="Co_occurring_Mental_Health_Conditions">
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+        </div>
+        
+        <div>
+            <label for="Physical_Health_Conditions">Physical Health Conditions:</label>
+            <select name="Physical_Health_Conditions" id="Physical_Health_Conditions">
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+        </div>
+        
+        <div>
+            <label for="Substance_Use_History">Substance Use History:</label>
+            <select name="Substance_Use_History" id="Substance_Use_History">
+                <option value="Opioids">Opioids</option>
+                <option value="Alcohol">Alcohol</option>
+                <option value="Cocaine">Cocaine</option>
+            </select>
+        </div>
+        
+        <div>
+            <label for="Social_Support_System">Social Support System:</label>
+            <select name="Social_Support_System" id="Social_Support_System">
+                <option value="Strong">Strong</option>
+                <option value="Moderate">Moderate</option>
+                <option value="Weak">Weak</option>
+            </select>
+        </div>
+        
+        <div>
+            <label for="Compliance_Potential">Compliance Potential:</label>
+            <select name="Compliance_Potential" id="Compliance_Potential">
+                <option value="High">High</option>
+                <option value="Moderate">Moderate</option>
+                <option value="Low">Low</option>
+            </select>
+        </div>
+        
+      
+        <div>
+            <input type="submit" value="Submit">
+        </div>
+    </form>
+
+    <!-- Modal -->
+    <div class="modal fade" id="resultModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabel">Prediction Result</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Result will be displayed here -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#eligibilityForm').submit(function(e) {
+                e.preventDefault(); // Prevent the form from submitting via the browser
+                var form = $(this);
+                $.ajax({
+                    type: 'POST',
+                    url: '/', // Adjust if your route is different
+                    data: form.serialize(),
+                    success: function(response) {
+                        // Show the modal with the result
+                        $('.modal-body').text(response.result); // Assuming your Flask response has a 'result' key
+                        $('#resultModal').modal('show');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
